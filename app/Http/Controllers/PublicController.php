@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Issue;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class PublicController extends Controller
@@ -54,6 +55,28 @@ class PublicController extends Controller
     public function soumissions()
     {
         return Inertia::render('Soumissions');
+    }
+
+    public function recherche(Request $request)
+    {
+        $q = trim($request->get('q', ''));
+
+        $articles = $q
+            ? Article::published()
+                ->with(['authors', 'issue'])
+                ->where(function ($query) use ($q) {
+                    $query->where('title', 'like', "%{$q}%")
+                        ->orWhere('abstract', 'like', "%{$q}%")
+                        ->orWhere('keywords', 'like', "%{$q}%")
+                        ->orWhereHas('authors', fn($a) => $a->where('name', 'like', "%{$q}%"));
+                })
+                ->get()
+            : collect();
+
+        return Inertia::render('Recherche', [
+            'query'    => $q,
+            'articles' => $articles,
+        ]);
     }
 
     public function article(Article $article)

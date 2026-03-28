@@ -1,9 +1,11 @@
-import { Link } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function MainLayout({ children }) {
     const [mobileOpen, setMobileOpen] = useState(false);
-    const [searchOpen, setSearchOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [mobileSearch, setMobileSearch] = useState('');
+    const [enTooltip, setEnTooltip] = useState(false);
 
     const navLinks = [
         { href: '/', label: 'Accueil' },
@@ -13,6 +15,25 @@ export default function MainLayout({ children }) {
         { href: '/soumissions', label: 'Soumettre un article' },
     ];
 
+    function handleSearch(e) {
+        e.preventDefault();
+        const q = searchQuery.trim();
+        if (q) {
+            router.get('/recherche', { q }, { preserveState: false });
+            setSearchQuery('');
+        }
+    }
+
+    function handleMobileSearch(e) {
+        e.preventDefault();
+        const q = mobileSearch.trim();
+        if (q) {
+            router.get('/recherche', { q }, { preserveState: false });
+            setMobileOpen(false);
+            setMobileSearch('');
+        }
+    }
+
     return (
         <div className="min-h-screen flex flex-col">
             {/* Institutional bar */}
@@ -21,14 +42,25 @@ export default function MainLayout({ children }) {
                     <div className="flex items-center gap-2">
                         <span className="font-semibold text-white/90">UCAD</span>
                         <span className="text-white/30">|</span>
-                        <span>Faculté des Sciences et Technologies de l'Éducation et de la Formation</span>
+                        <span className="hidden sm:inline">Faculté des Sciences et Technologies de l'Éducation et de la Formation</span>
+                        <span className="sm:hidden">FASTEF</span>
                     </div>
-                    <div className="hidden md:flex items-center gap-4">
-                        <span>ISSN : XXXX-XXXX</span>
-                        <div className="flex gap-1.5 bg-white/10 rounded px-2 py-0.5">
-                            <button className="text-white font-bold">FR</button>
+                    <div className="flex items-center gap-4">
+                        <span className="hidden md:inline">ISSN : XXXX-XXXX</span>
+                        <div className="relative flex gap-1.5 bg-white/10 rounded px-2 py-0.5">
+                            <button className="text-white font-bold cursor-default" aria-current="true">FR</button>
                             <span className="text-white/30">|</span>
-                            <button className="hover:text-white">EN</button>
+                            <button
+                                className="text-white/40 cursor-pointer hover:text-white/60 transition-colors"
+                                onClick={() => { setEnTooltip(true); setTimeout(() => setEnTooltip(false), 2500); }}
+                            >
+                                EN
+                            </button>
+                            {enTooltip && (
+                                <div className="absolute top-7 right-0 bg-[#1a1a2e] border border-white/10 text-white/70 text-[11px] px-3 py-1.5 rounded whitespace-nowrap shadow-lg z-50">
+                                    Version anglaise en préparation
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -43,18 +75,22 @@ export default function MainLayout({ children }) {
                             <img src="/images/logo-risadima.png" alt="RISADiMA" className="h-12 w-auto" />
                         </Link>
 
+                        {/* Desktop search */}
                         <div className="hidden md:flex items-center gap-3">
-                            {/* Search */}
-                            <div className="relative">
+                            <form onSubmit={handleSearch} className="relative">
                                 <input
                                     type="text"
+                                    value={searchQuery}
+                                    onChange={e => setSearchQuery(e.target.value)}
                                     placeholder="Rechercher un article, un auteur..."
                                     className="w-72 pl-4 pr-10 py-2.5 text-[13px] bg-[#f5f7fa] border border-gray-200 rounded-lg focus:outline-none focus:bg-white focus:border-[#087acc] focus:ring-1 focus:ring-[#087acc]/20 font-sans placeholder:text-gray-400 transition-all"
                                 />
-                                <svg className="absolute right-3 top-3 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
-                            </div>
+                                <button type="submit" className="absolute right-3 top-3 text-gray-400 hover:text-[#087acc] transition-colors">
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </button>
+                            </form>
                         </div>
 
                         <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden p-2">
@@ -67,9 +103,9 @@ export default function MainLayout({ children }) {
                         </button>
                     </div>
 
-                    {/* Navigation */}
-                    <nav className={`${mobileOpen ? 'block' : 'hidden'} md:block`}>
-                        <ul className="flex flex-col md:flex-row md:items-center md:-mx-1">
+                    {/* Desktop navigation */}
+                    <nav className="hidden md:block">
+                        <ul className="flex items-center -mx-1">
                             {navLinks.map((link) => (
                                 <li key={link.href}>
                                     <Link
@@ -82,6 +118,42 @@ export default function MainLayout({ children }) {
                             ))}
                         </ul>
                     </nav>
+
+                    {/* Mobile menu */}
+                    {mobileOpen && (
+                        <div className="md:hidden border-t border-gray-100 py-3">
+                            {/* Mobile search */}
+                            <form onSubmit={handleMobileSearch} className="flex gap-2 mb-3 px-1">
+                                <input
+                                    type="text"
+                                    value={mobileSearch}
+                                    onChange={e => setMobileSearch(e.target.value)}
+                                    placeholder="Rechercher..."
+                                    className="flex-1 pl-4 pr-4 py-2.5 text-[13px] bg-[#f5f7fa] border border-gray-200 rounded-lg focus:outline-none focus:border-[#087acc] font-sans placeholder:text-gray-400"
+                                />
+                                <button type="submit" className="px-4 py-2.5 bg-[#087acc] text-white rounded-lg">
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </button>
+                            </form>
+
+                            {/* Mobile nav links */}
+                            <ul>
+                                {navLinks.map((link) => (
+                                    <li key={link.href}>
+                                        <Link
+                                            href={link.href}
+                                            onClick={() => setMobileOpen(false)}
+                                            className="block px-2 py-3 text-[14px] font-semibold text-gray-700 hover:text-[#087acc] border-b border-gray-50 last:border-0 transition-colors"
+                                        >
+                                            {link.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
                 </div>
             </header>
 

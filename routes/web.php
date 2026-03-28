@@ -10,3 +10,4 @@ Route::get('/comite', [PublicController::class, 'comite'])->name('comite');
 Route::get('/soumissions', [PublicController::class, 'soumissions'])->name('soumissions');
 Route::get('/numeros/{issue}', [PublicController::class, 'issue'])->name('issue.show');
 Route::get('/articles/{article}', [PublicController::class, 'article'])->name('article.show');
+Route::get('/recherche', [PublicController::class, 'recherche'])->name('recherche');
