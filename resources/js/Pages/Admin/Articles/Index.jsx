@@ -1,10 +1,16 @@
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
 
 export default function ArticlesIndex({ articles }) {
+    const { flash } = usePage().props;
+
     function handleDelete(id, title) {
         if (!window.confirm(`Supprimer l'article « ${title} » ? Cette action est irréversible.`)) return;
         router.delete(`/admin/articles/${id}`);
+    }
+
+    function handleToggle(id) {
+        router.patch(`/admin/articles/${id}/toggle-publish`, {}, { preserveScroll: true });
     }
 
     return (
@@ -27,6 +33,15 @@ export default function ArticlesIndex({ articles }) {
                 </Link>
             </div>
 
+            {flash?.success && (
+                <div className="mb-5 flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 rounded-lg px-4 py-3 text-[13px]">
+                    <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {flash.success}
+                </div>
+            )}
+
             <div className="bg-white rounded-xl border border-[#c8d8e8]/60 shadow-sm overflow-hidden">
                 {articles.length === 0 ? (
                     <div className="py-16 text-center">
@@ -45,6 +60,7 @@ export default function ArticlesIndex({ articles }) {
                                     <th className="text-left px-4 py-3 font-semibold text-gray-500 uppercase tracking-wider text-[11px] hidden md:table-cell">Numéro</th>
                                     <th className="text-left px-4 py-3 font-semibold text-gray-500 uppercase tracking-wider text-[11px] hidden lg:table-cell">Auteurs</th>
                                     <th className="text-left px-4 py-3 font-semibold text-gray-500 uppercase tracking-wider text-[11px] hidden xl:table-cell">Pages</th>
+                                    <th className="text-left px-4 py-3 font-semibold text-gray-500 uppercase tracking-wider text-[11px] hidden xl:table-cell">DL</th>
                                     <th className="text-left px-4 py-3 font-semibold text-gray-500 uppercase tracking-wider text-[11px]">Statut</th>
                                     <th className="px-4 py-3 text-right font-semibold text-gray-500 uppercase tracking-wider text-[11px]">Actions</th>
                                 </tr>
@@ -89,19 +105,53 @@ export default function ArticlesIndex({ articles }) {
                                                 ? `pp. ${article.pages_start}–${article.pages_end}`
                                                 : <span className="text-gray-300">—</span>}
                                         </td>
+                                        <td className="px-4 py-3.5 hidden xl:table-cell">
+                                            <span className="inline-flex items-center gap-1 text-[11px] text-gray-500">
+                                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                                </svg>
+                                                {article.downloads_count ?? 0}
+                                            </span>
+                                        </td>
                                         <td className="px-4 py-3.5">
-                                            {article.is_published ? (
-                                                <span className="text-[11px] font-semibold text-green-700 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full">
-                                                    Publié
-                                                </span>
-                                            ) : (
-                                                <span className="text-[11px] font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">
-                                                    Brouillon
-                                                </span>
-                                            )}
+                                            <div className="flex items-center gap-2">
+                                                {article.is_published ? (
+                                                    <span className="text-[11px] font-semibold text-green-700 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full">
+                                                        Publié
+                                                    </span>
+                                                ) : (
+                                                    <span className="text-[11px] font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">
+                                                        Brouillon
+                                                    </span>
+                                                )}
+                                                <button
+                                                    onClick={() => handleToggle(article.id)}
+                                                    title={article.is_published ? 'Dépublier' : 'Publier'}
+                                                    className="text-gray-400 hover:text-[#087acc] transition-colors"
+                                                >
+                                                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                                            d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                                                    </svg>
+                                                </button>
+                                            </div>
                                         </td>
                                         <td className="px-4 py-3.5 text-right">
                                             <div className="flex items-center justify-end gap-2">
+                                                <a
+                                                    href={`/articles/${article.id}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    title="Voir sur le site"
+                                                    className="inline-flex items-center text-gray-400 hover:text-[#087acc] transition-colors"
+                                                >
+                                                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                    </svg>
+                                                </a>
                                                 <Link
                                                     href={`/admin/articles/${article.id}/edit`}
                                                     className="inline-flex items-center gap-1 text-[12px] text-[#087acc] hover:text-[#065fa1] font-medium transition-colors"

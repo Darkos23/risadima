@@ -64,6 +64,17 @@ export default function Dashboard({ stats, latestArticles }) {
                 </svg>
             ),
         },
+        {
+            label: 'Téléchargements totaux',
+            value: stats.total_downloads,
+            accent: '#7c3aed',
+            icon: (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8}
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+            ),
+        },
     ];
 
     return (
@@ -81,7 +92,7 @@ export default function Dashboard({ stats, latestArticles }) {
             </div>
 
             {/* Stats grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4 mb-8">
                 {statCards.map((card) => (
                     <StatCard key={card.label} {...card} />
                 ))}

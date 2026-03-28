@@ -92,4 +92,10 @@ class PublicController extends Controller
             'article' => $article,
         ]);
     }
+
+    public function downloadArticle(Article $article)
+    {
+        $article->increment('downloads_count');
+        return redirect('/storage/' . $article->pdf_path);
+    }
 }

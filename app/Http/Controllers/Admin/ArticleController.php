@@ -18,13 +18,14 @@ class ArticleController extends Controller
             ->orderByDesc('created_at')
             ->get()
             ->map(fn($a) => [
-                'id'           => $a->id,
-                'title'        => $a->title,
-                'doi'          => $a->doi,
-                'is_published' => $a->is_published,
-                'pages_start'  => $a->pages_start,
-                'pages_end'    => $a->pages_end,
-                'issue'        => $a->issue ? [
+                'id'              => $a->id,
+                'title'           => $a->title,
+                'doi'             => $a->doi,
+                'is_published'    => $a->is_published,
+                'pages_start'     => $a->pages_start,
+                'pages_end'       => $a->pages_end,
+                'downloads_count' => $a->downloads_count,
+                'issue'           => $a->issue ? [
                     'id'     => $a->issue->id,
                     'title'  => $a->issue->title,
                     'number' => $a->issue->number,
@@ -148,6 +149,12 @@ class ArticleController extends Controller
         $article->authors()->sync($sync);
 
         return redirect()->route('admin.articles.index')->with('success', 'Article mis à jour.');
+    }
+
+    public function togglePublish(Article $article)
+    {
+        $article->update(['is_published' => !$article->is_published]);
+        return back()->with('success', $article->is_published ? 'Article publié.' : 'Article dépublié.');
     }
 
     public function destroy(Article $article)

@@ -13,10 +13,11 @@ class DashboardController extends Controller
     public function index()
     {
         $stats = [
-            'issues'            => Issue::count(),
-            'articles'          => Article::count(),
-            'authors'           => Author::count(),
+            'issues'             => Issue::count(),
+            'articles'           => Article::count(),
+            'authors'            => Author::count(),
             'articles_published' => Article::where('is_published', true)->count(),
+            'total_downloads'    => Article::sum('downloads_count'),
         ];
 
         $latestArticles = Article::with(['issue', 'authors'])

@@ -101,6 +101,12 @@ class IssueController extends Controller
         return redirect()->route('admin.numeros.index')->with('success', 'Numéro mis à jour.');
     }
 
+    public function togglePublish(Issue $numero)
+    {
+        $numero->update(['is_published' => !$numero->is_published]);
+        return back()->with('success', $numero->is_published ? 'Numéro publié.' : 'Numéro dépublié.');
+    }
+
     public function destroy(Issue $numero)
     {
         if ($numero->cover_image) {
