@@ -57,6 +57,11 @@ class PublicController extends Controller
         return Inertia::render('Soumissions');
     }
 
+    public function actesAdima1()
+    {
+        return Inertia::render('ActesAdima1');
+    }
+
     public function recherche(Request $request)
     {
         $q = trim($request->get('q', ''));

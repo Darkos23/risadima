@@ -121,7 +121,7 @@ export default function APropos() {
                         <div className="absolute left-5 top-0 bottom-0 w-px bg-gradient-to-b from-[#d4a843]/40 via-[#087acc]/20 to-transparent" />
                         <ol className="space-y-6 ml-12">
                             {[
-                                { year: '2016', label: '1re conférence ADiMA', desc: 'Création de l\'Association de Didacticiens des Mathématiques Africains (ADiMA) lors de la première conférence au Cameroun.' },
+                                { year: '2016', label: '1re conférence ADiMA', desc: 'Création de l\'Association de Didacticiens des Mathématiques Africains (ADiMA) lors de la première conférence au Cameroun.', link: '/actes/adima-1', linkLabel: 'Lire les actes' },
                                 { year: '2018', label: 'Décision de créer la revue', desc: 'L\'assemblée générale de l\'ADiMA à Porto-Novo (Bénin) retient la création d\'une revue scientifique comme perspective prioritaire.' },
                                 { year: '2021', label: 'Comité de fondation', desc: 'Sur l\'initiative du Pr. Adolphe Adihou, un comité de six membres est créé en juin pour concevoir les statuts et la politique éditoriale.' },
                                 { year: '2022', label: '3e conférence ADiMA', desc: 'Rencontre scientifique en Tunisie. Développement des composantes de la revue et désignation des rédactrices en chef.' },
@@ -134,6 +134,17 @@ export default function APropos() {
                                     <div className="bg-white rounded-xl border border-[#c8d8e8]/60 shadow-sm p-5 card-hover">
                                         <p className="font-sans text-[13px] font-bold text-[#087acc] uppercase tracking-wider mb-1">{item.label}</p>
                                         <p className="font-serif text-[14px] text-[#3a4050]">{item.desc}</p>
+                                        {item.link && (
+                                            <Link
+                                                href={item.link}
+                                                className="inline-flex items-center gap-1.5 mt-3 font-sans text-[12px] font-semibold text-[#d4a843] hover:text-[#c49833] transition-colors"
+                                            >
+                                                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                </svg>
+                                                {item.linkLabel}
+                                            </Link>
+                                        )}
                                     </div>
                                 </li>
                             ))}

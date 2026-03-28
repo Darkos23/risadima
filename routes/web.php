@@ -12,6 +12,7 @@ Route::get('/soumissions', [PublicController::class, 'soumissions'])->name('soum
 Route::get('/numeros/{issue}', [PublicController::class, 'issue'])->name('issue.show');
 Route::get('/articles/{article}', [PublicController::class, 'article'])->name('article.show');
 Route::get('/recherche', [PublicController::class, 'recherche'])->name('recherche');
+Route::get('/actes/adima-1', [PublicController::class, 'actesAdima1'])->name('actes.adima1');
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware('guest')->group(function () {
