@@ -42,13 +42,13 @@ export default function APropos() {
                             </div>
                             <div className="bg-white rounded-xl border border-[#c8d8e8]/60 shadow-sm p-8 greek-corner">
                                 <p className="font-serif text-[15px] text-[#3a4050] leading-relaxed">
-                                    <strong>RISADiMA</strong> — Revue Internationale Scientifique de l'Association de Didactique des Mathématiques d'Afrique — est une publication scientifique à comité de lecture, fondée par l'ADiMA et hébergée à la Faculté des Sciences et Technologies de l'Éducation et de la Formation (<strong>FASTEF</strong>) de l'Université Cheikh Anta Diop de Dakar.
+                                    <strong>RISADiMA</strong> — Revue Internationale Scientifique de l'Association de Didactique des Mathématiques d'Afrique — est une revue à dimension francophone et internationale, s'inscrivant en éducation et dans le champ des disciplines scientifiques.
                                 </p>
                                 <p className="font-serif text-[15px] text-[#3a4050] leading-relaxed mt-4">
-                                    La revue a pour mission de diffuser des recherches originales portant sur la <strong>didactique des mathématiques</strong>, des sciences et des disciplines connexes, avec un ancrage particulier dans le contexte éducatif africain et une ouverture sur la francophonie internationale.
+                                    La revue vise la publication de travaux de recherche en éducation, précisément ceux touchant <strong>l'enseignement et l'apprentissage des mathématiques</strong> et des disciplines scientifiques, la formation en didactique des mathématiques, menés par des didacticien·nes africain·es ou d'ailleurs.
                                 </p>
                                 <p className="font-serif text-[15px] text-[#3a4050] leading-relaxed mt-4">
-                                    Dans la tradition des grands mathématiciens grecs — Euclide, Pythagore, Archimède —, RISADiMA perpétue l'exigence de rigueur et la passion de la transmission du savoir.
+                                    Elle prône le rehaussement du niveau de la qualité des recherches scientifiques et leur promotion pour plus de visibilité. Elle est ouverte aux différentes écoles de pensées et aux approches théoriques et méthodologiques en vigueur dans les sciences de l'éducation et en didactique des mathématiques.
                                 </p>
                             </div>
                         </div>
@@ -121,9 +121,11 @@ export default function APropos() {
                         <div className="absolute left-5 top-0 bottom-0 w-px bg-gradient-to-b from-[#d4a843]/40 via-[#087acc]/20 to-transparent" />
                         <ol className="space-y-6 ml-12">
                             {[
-                                { year: '2025', label: 'Fondation', desc: 'Création de RISADiMA par l\'ADiMA, hébergée à la FASTEF, UCAD, Dakar.' },
-                                { year: '2025', label: 'Premier numéro', desc: 'Publication du volume inaugural avec 3 articles fondateurs en didactique des mathématiques.' },
-                                { year: '2026', label: 'Indexation en cours', desc: 'Lancement du processus d\'indexation DOAJ, adoption du système DOI.' },
+                                { year: '2016', label: '1re conférence ADiMA', desc: 'Création de l\'Association de Didacticiens des Mathématiques Africains (ADiMA) lors de la première conférence au Cameroun.' },
+                                { year: '2018', label: 'Décision de créer la revue', desc: 'L\'assemblée générale de l\'ADiMA à Porto-Novo (Bénin) retient la création d\'une revue scientifique comme perspective prioritaire.' },
+                                { year: '2021', label: 'Comité de fondation', desc: 'Sur l\'initiative du Pr. Adolphe Adihou, un comité de six membres est créé en juin pour concevoir les statuts et la politique éditoriale.' },
+                                { year: '2022', label: '3e conférence ADiMA', desc: 'Rencontre scientifique en Tunisie. Développement des composantes de la revue et désignation des rédactrices en chef.' },
+                                { year: '2024', label: 'Validation officielle', desc: 'L\'assemblée générale du Colloque ADiMA4 au Maroc valide le nom définitif : Revue Internationale Scientifique de l\'Association de Didactique des Mathématiques d\'Afrique.' },
                             ].map((item, i) => (
                                 <li key={i} className="relative">
                                     <div className="absolute -left-12 w-10 h-10 rounded-full bg-[#1a1a2e] border-2 border-[#d4a843]/30 flex items-center justify-center">

@@ -6,44 +6,45 @@ const steps = [
     {
         num: '01', greek: 'α',
         title: 'Préparation du manuscrit',
-        desc: 'Rédigez votre article selon les normes de la revue. Anonymisez le document en retirant tout élément d\'identification (nom, affiliation, auto-citations explicites).',
+        desc: 'Rédigez votre article selon les normes RISADiMA. Préparez deux versions : une non anonymisée et une anonymisée (noms, affiliations et auto-citations retirés ou remplacés par « Auteur·es, date »).',
     },
     {
         num: '02', greek: 'β',
         title: 'Soumission en ligne',
-        desc: 'Déposez votre manuscrit via la plateforme. Un accusé de réception vous sera envoyé dans les 48 heures ouvrées.',
+        desc: 'Déposez vos deux fichiers via la plateforme de la revue. La soumission est ouverte à tout moment de l\'année.',
     },
     {
         num: '03', greek: 'γ',
-        title: 'Examen préliminaire',
-        desc: 'Le rédacteur en chef vérifie la conformité aux normes et l\'adéquation thématique avant envoi en évaluation. Délai : 1 à 2 semaines.',
+        title: 'Lecture de recevabilité',
+        desc: 'Le comité de rédaction vérifie la conformité aux normes éditoriales et l\'adéquation thématique. Tout texte non conforme est rejeté sans lecture.',
     },
     {
         num: '04', greek: 'δ',
         title: 'Évaluation en double aveugle',
-        desc: 'Deux experts indépendants évaluent le manuscrit selon des critères scientifiques rigoureux. Délai moyen : 8 à 12 semaines.',
+        desc: 'Deux experts évaluent anonymement le manuscrit. Un troisième est sollicité en cas d\'avis divergents. Décision : A (accepté), B (révisions mineures), C (révisions majeures) ou D (refusé).',
     },
     {
         num: '05', greek: 'ε',
-        title: 'Décision et révision',
-        desc: 'Le rédacteur en chef notifie la décision : acceptation, révision majeure / mineure ou refus. Les auteurs disposent de 4 semaines pour soumettre une version révisée.',
+        title: 'Révision et second tour',
+        desc: 'Les auteurs reçoivent un rapport argumenté et disposent d\'un délai pour soumettre une version révisée. Un second tour d\'expertise valide les modifications apportées.',
     },
     {
         num: '06', greek: 'ζ',
-        title: 'Publication et DOI',
-        desc: 'Après acceptation définitive, l\'article est mis en ligne en accès libre avec attribution d\'un identifiant DOI permanent.',
+        title: 'Publication',
+        desc: 'Après acceptation définitive, l\'article est publié en accès libre. Deux parutions par an (dossiers thématiques ou non thématiques).',
     },
 ];
 
 const norms = [
-    { label: 'Longueur', value: '6 000 – 9 000 mots (références incluses)' },
-    { label: 'Format', value: 'Word (.docx) — Times New Roman 12 pt, interligne 1,5' },
-    { label: 'Résumé', value: '150 – 200 mots en français + traduction anglaise' },
-    { label: 'Mots-clés', value: '4 à 6 termes, en français et anglais' },
-    { label: 'Style bibliographique', value: 'APA 7e édition' },
-    { label: 'Tableaux & figures', value: 'Légendés, numérotés, intégrés dans le texte' },
-    { label: 'Langue', value: 'Français (anglais accepté pour les auteurs non francophones)' },
-    { label: 'Fichiers joints', value: 'Manuscrit + lettre de soumission (format PDF)' },
+    { label: 'Corps du texte', value: '7 000 – 10 000 mots (références incluses)' },
+    { label: 'Résumé', value: '200 – 300 mots (un seul paragraphe, sans acronymes)' },
+    { label: 'Mots-clés', value: '4 à 7 termes' },
+    { label: 'Format', value: 'Word (.docx) — Times New Roman 12 pt, justifié' },
+    { label: 'Interligne', value: 'Multiple 1,08 — espacement avant 0, après 6' },
+    { label: 'Style bibliographique', value: 'Normes APA' },
+    { label: 'Langue', value: 'Français (révision linguistique recommandée)' },
+    { label: 'Fichiers à soumettre', value: 'Version non anonymisée + version anonymisée' },
+    { label: 'Annexes', value: '3 pages maximum (si nécessaire)' },
 ];
 
 export default function Soumissions() {
