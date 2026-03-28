@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Head } from '@inertiajs/react';
 import { Link } from '@inertiajs/react';
 import MainLayout from '../Layouts/MainLayout';
@@ -48,6 +49,8 @@ const norms = [
 ];
 
 export default function Soumissions() {
+    const [modal, setModal] = useState(false);
+
     return (
         <MainLayout>
             <Head title="Soumettre un article — RISADiMA" />
@@ -197,12 +200,12 @@ export default function Soumissions() {
                                 Pour toute question sur le processus ou sur les normes éditoriales, contactez la rédaction.
                             </p>
                             <div className="flex flex-wrap gap-3">
-                                <Link href="#" className="btn-primary text-sm">
+                                <button onClick={() => setModal(true)} className="btn-primary text-sm">
                                     Déposer un manuscrit
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                     </svg>
-                                </Link>
+                                </button>
                                 <a href="mailto:contact@risadima.sn" className="btn-secondary text-sm">
                                     Nous écrire
                                 </a>
@@ -211,6 +214,53 @@ export default function Soumissions() {
                     </div>
                 </div>
             </section>
+            {/* Modal bientôt disponible */}
+            {modal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setModal(false)}>
+                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+                    <div
+                        className="relative bg-[#1a1a2e] rounded-2xl border border-[#d4a843]/20 shadow-2xl p-8 max-w-md w-full"
+                        onClick={e => e.stopPropagation()}
+                    >
+                        <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#d4a843]/50 to-transparent rounded-t-2xl" />
+
+                        {/* Icône */}
+                        <div className="flex justify-center mb-5">
+                            <div className="w-16 h-16 rounded-full bg-[#d4a843]/10 border border-[#d4a843]/20 flex items-center justify-center">
+                                <span className="font-serif text-[#d4a843] text-[2rem] italic">κ</span>
+                            </div>
+                        </div>
+
+                        <h3 className="font-sans text-[1.2rem] font-bold text-white text-center mb-2">
+                            Plateforme en construction
+                        </h3>
+                        <p className="font-sans text-[10px] font-bold text-[#d4a843] uppercase tracking-[0.2em] text-center mb-4">
+                            Σύντομα · Bientôt disponible
+                        </p>
+                        <p className="font-serif text-[13px] text-gray-400 text-center leading-relaxed mb-6">
+                            La soumission en ligne sera disponible prochainement. En attendant, envoyez votre manuscrit directement à la rédaction.
+                        </p>
+
+                        <div className="flex flex-col gap-3">
+                            <a
+                                href="mailto:contact@risadima.sn"
+                                className="btn-primary text-sm justify-center"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                                Contacter la rédaction
+                            </a>
+                            <button
+                                onClick={() => setModal(false)}
+                                className="font-sans text-[12px] text-gray-500 hover:text-gray-300 transition-colors"
+                            >
+                                Fermer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </MainLayout>
     );
 }
