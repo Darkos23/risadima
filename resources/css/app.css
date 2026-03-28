@@ -6,6 +6,480 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Noto Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-serif: 'Noto Serif', Georgia, 'Times New Roman', serif;
+}
+
+@layer base {
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        color: #212121;
+        background-color: #f0f4f8;
+        background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Noto Sans', ui-sans-serif, system-ui, sans-serif;
+    }
+
+    p, .prose {
+        font-family: 'Noto Serif', Georgia, 'Times New Roman', serif;
+    }
+}
+
+/* Greek meander line */
+.meander-line {
+    height: 24px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='24' viewBox='0 0 48 24'%3E%3Cpath d='M0,12 L6,12 L6,2 L18,2 L18,12 L24,12 L24,22 L36,22 L36,12 L42,12 L42,2 L48,2' fill='none' stroke='%23d4a843' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-position: center;
+    opacity: 0.35;
+}
+
+/* Greek meander divider */
+.meander-divider {
+    height: 44px;
+    background-color: #e8edf3;
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='24' viewBox='0 0 48 24'%3E%3Cpath d='M0,12 L6,12 L6,2 L18,2 L18,12 L24,12 L24,22 L36,22 L36,12 L42,12 L42,2 L48,2' fill='none' stroke='%23b8993e' stroke-width='1.8'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-position: center;
+    border-top: 1px solid #c4a44a;
+    border-bottom: 1px solid #c4a44a;
+}
+
+/* Parchment card — light blue tint */
+.parchment-bg {
+    background-color: #f4f7fb;
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"),
+        radial-gradient(ellipse at 30% 20%, rgba(8, 122, 204, 0.03) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 80%, rgba(91, 163, 217, 0.02) 0%, transparent 60%);
+    box-shadow: inset 0 0 80px rgba(8, 122, 204, 0.03);
+    border-top: 1px solid #dce5ef;
+    border-bottom: 1px solid #dce5ef;
+}
+
+/* Aged paper — warm accent section */
+.aged-paper {
+    background-color: #eef2f7;
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeTurbulence baseFrequency='0.8' numOctaves='5' type='fractalNoise'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23f)' opacity='0.03'/%3E%3C/svg%3E"),
+        linear-gradient(180deg, rgba(26, 26, 46, 0.02) 0%, transparent 30%, transparent 70%, rgba(26, 26, 46, 0.02) 100%);
+    border-top: 1px solid #d0dae8;
+    border-bottom: 1px solid #d0dae8;
+    box-shadow: inset 0 0 60px rgba(8, 122, 204, 0.02);
+}
+
+/* ===== ANIMATIONS & EFFECTS ===== */
+
+/* Floating animation for Greek letters */
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+    50% { transform: translateY(-20px) rotate(calc(var(--rot, 0deg) + 3deg)); }
+}
+
+@keyframes float-slow {
+    0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+    50% { transform: translateY(-12px) rotate(calc(var(--rot, 0deg) - 2deg)); }
+}
+
+.float-anim {
+    animation: float 6s ease-in-out infinite;
+}
+
+.float-anim-slow {
+    animation: float-slow 8s ease-in-out infinite;
+}
+
+.float-anim-delayed {
+    animation: float 7s ease-in-out 2s infinite;
+}
+
+/* Gold shimmer sweep effect */
+@keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+.gold-shimmer {
+    background: linear-gradient(
+        110deg,
+        transparent 20%,
+        rgba(212, 168, 67, 0.15) 40%,
+        rgba(212, 168, 67, 0.3) 50%,
+        rgba(212, 168, 67, 0.15) 60%,
+        transparent 80%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 4s ease-in-out infinite;
+}
+
+/* Pulse glow for accent elements */
+@keyframes pulse-gold {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(212, 168, 67, 0); }
+    50% { box-shadow: 0 0 20px 4px rgba(212, 168, 67, 0.15); }
+}
+
+.pulse-gold {
+    animation: pulse-gold 3s ease-in-out infinite;
+}
+
+/* Fade in up on scroll */
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fade-in-up 0.8s ease-out both;
+}
+
+/* Scrolling mathematician names */
+@keyframes scroll-names {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.scroll-names {
+    animation: scroll-names 25s linear infinite;
+}
+
+/* Rotating geometric SVG */
+@keyframes rotate-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.rotate-slow {
+    animation: rotate-slow 60s linear infinite;
+}
+
+/* Gold border glow */
+@keyframes border-glow {
+    0%, 100% { border-color: rgba(196, 164, 74, 0.3); }
+    50% { border-color: rgba(212, 168, 67, 0.7); }
+}
+
+.border-glow {
+    animation: border-glow 3s ease-in-out infinite;
+}
+
+/* Meander scroll animation */
+@keyframes meander-scroll {
+    from { background-position-x: 0; }
+    to { background-position-x: 48px; }
+}
+
+.meander-divider {
+    animation: meander-scroll 3s linear infinite;
+}
+
+.meander-line {
+    animation: meander-scroll 4s linear infinite;
+}
+
+/* Card hover lift */
+.card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(8, 122, 204, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* ===== PREMIUM BUTTONS ===== */
+
+/* Primary button — blue with glow + arrow slide */
+.btn-primary {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, #087acc 0%, #0969b3 100%);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(8, 122, 204, 0.25);
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(8, 122, 204, 0.35);
+}
+
+.btn-primary svg {
+    transition: transform 0.3s ease;
+}
+
+.btn-primary:hover svg {
+    transform: translateX(3px);
+}
+
+/* Secondary button — glass outline */
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    backdrop-filter: blur(4px);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-secondary:hover {
+    color: white;
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-2px);
+}
+
+/* Dark button — navy with gold accent */
+.btn-dark {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    background: #1a1a2e;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(26, 26, 46, 0.2);
+}
+
+.btn-dark::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #d4a843, transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-dark:hover::after {
+    opacity: 1;
+}
+
+.btn-dark:hover {
+    background: #252545;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(26, 26, 46, 0.3);
+}
+
+/* Text link button */
+.btn-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a2e;
+    padding: 14px 8px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.btn-link::after {
+    content: '';
+    position: absolute;
+    bottom: 10px;
+    left: 8px;
+    right: 8px;
+    height: 1.5px;
+    background: #087acc;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.btn-link:hover {
+    color: #087acc;
+}
+
+.btn-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.btn-link svg {
+    transition: transform 0.3s ease;
+}
+
+.btn-link:hover svg {
+    transform: translateX(4px);
+}
+
+/* Gradient text for Greek */
+.text-gold-gradient {
+    background: linear-gradient(135deg, #d4a843 0%, #f0d78c 50%, #c4944a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ===== CREATIVE CARD STYLES ===== */
+
+/* Greek corner ornaments */
+.greek-corner {
+    position: relative;
+}
+
+.greek-corner::before,
+.greek-corner::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-color: #d4a843;
+    opacity: 0.35;
+    transition: opacity 0.3s ease;
+}
+
+.greek-corner::before {
+    top: 0;
+    left: 0;
+    border-top: 2px solid;
+    border-left: 2px solid;
+}
+
+.greek-corner::after {
+    bottom: 0;
+    right: 0;
+    border-bottom: 2px solid;
+    border-right: 2px solid;
+}
+
+.greek-corner:hover::before,
+.greek-corner:hover::after {
+    opacity: 0.7;
+    width: 32px;
+    height: 32px;
+}
+
+/* Article card with left accent */
+.article-card {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.article-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, #087acc, #5ba3d9);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.article-card:hover::before {
+    opacity: 1;
+}
+
+.article-card:hover {
+    background: linear-gradient(135deg, #f8fbff 0%, #f0f6fc 100%);
+    transform: translateX(4px);
+}
+
+/* Process step card with connecting line */
+.step-card {
+    position: relative;
+}
+
+.step-card::after {
+    content: '';
+    position: absolute;
+    bottom: -16px;
+    left: 50%;
+    width: 1px;
+    height: 16px;
+    background: linear-gradient(180deg, #d4a843, transparent);
+    opacity: 0.3;
+}
+
+.step-card:last-child::after {
+    display: none;
+}
+
+/* Geometric hover reveal */
+.geo-reveal {
+    position: relative;
+    overflow: hidden;
+}
+
+.geo-reveal::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(8, 122, 204, 0.04) 0%, transparent 70%);
+    transform: scale(0);
+    transition: transform 0.5s ease;
+    border-radius: 50%;
+}
+
+.geo-reveal:hover::after {
+    transform: scale(3);
+}
+
+/* Number circle with ring */
+.num-ring {
+    position: relative;
+}
+
+.num-ring::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1.5px dashed rgba(212, 168, 67, 0.3);
+    animation: rotate-slow 20s linear infinite;
 }
