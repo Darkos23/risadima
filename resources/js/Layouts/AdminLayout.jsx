@@ -89,8 +89,8 @@ export default function AdminLayout({ children, title }) {
 
             {/* Sidebar */}
             <aside
-                className={`fixed top-0 left-0 h-full w-64 bg-[#1a1a2e] flex flex-col z-30 transition-transform duration-200
-                    ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 lg:static lg:h-screen`}
+                className={`fixed top-0 left-0 h-screen w-64 bg-[#1a1a2e] flex flex-col z-30 transition-transform duration-200
+                    ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}
             >
                 {/* Logo / Brand */}
                 <div className="px-5 py-5 border-b border-white/8">
@@ -143,7 +143,7 @@ export default function AdminLayout({ children, title }) {
             </aside>
 
             {/* Main content */}
-            <div className="flex-1 flex flex-col min-w-0 lg:ml-0">
+            <div className="flex-1 flex flex-col min-w-0 lg:ml-64">
                 {/* Top bar */}
                 <header className="h-14 bg-white border-b border-gray-100 flex items-center px-6 gap-4 sticky top-0 z-10 shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
                     <button
